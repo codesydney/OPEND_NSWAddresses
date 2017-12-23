@@ -1,0 +1,37 @@
+select 
+a.address_detail_pid,
+a.building_name,
+a.flat_type_code,
+a.flat_number_prefix,
+a.flat_number,
+a.flat_number_suffix,
+a.level_type_code,
+a.level_number_prefix,
+a.level_number,
+a.level_number_suffix,
+a.number_first_prefix,
+a.number_first,
+a.number_first_suffix,
+a.number_last_prefix,
+a.number_last,
+a.number_last_suffix,
+b.street_name,
+b.street_type_code,
+b.street_suffix_code,
+c.locality_name,
+a.postcode,
+d.longitude,
+d.latitude,
+f.mb_2016_code
+from raw_gnaf_201711.address_detail a,
+     raw_gnaf_201711.street_locality b,     
+     raw_gnaf_201711.locality c,
+     raw_gnaf_201711.address_site_geocode d,
+     raw_gnaf_201711.address_mesh_block_2016 e,
+     raw_gnaf_201711.mb_2016 f
+where a.street_locality_pid = b.street_locality_pid and 
+      c.locality_pid = b.locality_pid and 
+      a.address_site_pid = d.address_site_pid and 
+      a.address_detail_pid = e.address_detail_pid and 
+      e.mb_2016_pid = f.mb_2016_pid     
+LIMIT 10
